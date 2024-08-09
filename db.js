@@ -1,5 +1,5 @@
-const {createPool} = require('mysql2/promise'); //desestructuramos createPool del modulo mysql2
-require('dotenv').config(); //importamos dotenv para el uso de variables de entorno 
+import {createPool} from 'mysql2/promise'; // const {createPool} = require('mysql2/promise'); //desestructuramos createPool del modulo mysql2
+import 'dotenv/config'; // require('dotenv').config(); //importamos dotenv para el uso de variables de entorno 
 
 //Creamos la conexión a la base de datos mysql
 const connection_db = createPool({
@@ -11,4 +11,4 @@ const connection_db = createPool({
 });
 
 //exportamos la conexión
-module.exports = {connection_db};
+export default connection_db // module.exports = {connection_db};

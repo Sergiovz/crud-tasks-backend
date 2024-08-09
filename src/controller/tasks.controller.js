@@ -1,16 +1,15 @@
 //Importamos la conexión de la base de datos
-const {connection_db} = require("../../db");
-
+import connection_db from '../../db.js' // const {connection_db} = require("../../db");
 
 //Prueba para verificar la conexión a la base de datos
-const Pong = async (req, res) => {
+export const Pong = async (req, res) => {
     const result = await connection_db.query('SELECT 1 + 1 AS result');
     res.json(result[0]);
 }
 
 
 //      Obtener todas las Tareas
-const obteniendoTareas = async (req, res) => {
+export const obteniendoTareas = async (req, res) => {
     try {
         const [rows] = await connection_db.query('SELECT * FROM tasks');
         res.send(rows);
@@ -21,7 +20,7 @@ const obteniendoTareas = async (req, res) => {
 
 
 //      Obtener una sola Tarea
-const obteniendoUnaTarea = async (req, res) => {
+export const obteniendoUnaTarea = async (req, res) => {
     try {
         const [rows] = await connection_db.query('SELECT * FROM tasks WHERE id = ?', [req.params.id]);
     
@@ -37,7 +36,7 @@ const obteniendoUnaTarea = async (req, res) => {
 
 
 //      Crear una Tarea
-const creandoUnaTarea = async (req, res) => {
+export const creandoUnaTarea = async (req, res) => {
     try {     
         const {title, description, isComplete} = req.body;
         const [rows] = await connection_db.query('INSERT INTO tasks (title, description, isComplete) VALUES (?,?,?)', [title, description, isComplete])
@@ -54,7 +53,7 @@ const creandoUnaTarea = async (req, res) => {
 
 
 //      Actualizar todos los campos de una Tarea
-const actualizandoUnaTarea = async (req, res) => {
+export const actualizandoUnaTarea = async (req, res) => {
     try {
         const {id} = req.params;
         const {title, description, isComplete} = req.body;
@@ -75,7 +74,7 @@ const actualizandoUnaTarea = async (req, res) => {
 
 
 //      Actualizar un campo en especifico de una Tarea
-const actualizarUnCampo = async (req, res) => {
+export const actualizarUnCampo = async (req, res) => {
     try {
         const {id} = req.params;
         const {title, description, isComplete} = req.body;
@@ -96,7 +95,7 @@ const actualizarUnCampo = async (req, res) => {
 
 
 //      Eliminar una Tarea
-const eliminandoUnaTarea = async (req, res) => {
+export const eliminandoUnaTarea = async (req, res) => {
     try {     
         const [result] = await connection_db.query('DELETE FROM tasks WHERE id = ?', [req.params.id]);
     
@@ -109,6 +108,3 @@ const eliminandoUnaTarea = async (req, res) => {
         return res.status(500).json({message: 'Something has gone wrong when removing'});
     }
 }
-
-
-module.exports = {Pong, obteniendoTareas, obteniendoUnaTarea, creandoUnaTarea, actualizandoUnaTarea, actualizarUnCampo, eliminandoUnaTarea};

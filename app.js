@@ -1,9 +1,9 @@
 //importamos los modulos requeridos
-const express = require('express');
-const morgan = require('morgan');
-const helmet = require('helmet');
-require('dotenv').config();
-
+import express from 'express'; // const express = require('express');
+import morgan from 'morgan'; // const morgan = require('morgan');
+import helmet from 'helmet'; // const helmet = require('helmet');
+import 'dotenv/config'; // require('dotenv').config();
+import router from './src/router/tasks.router.js'
 //inicializamos la aplicación
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(helmet());
 
 //router
-app.use('/api', require('./src/router/tasks.router'));
+app.use('/api', router );
 
 //Error 404
 app.use((req, res, next) => {

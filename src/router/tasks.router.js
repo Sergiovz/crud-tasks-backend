@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const { Pong, obteniendoTareas, obteniendoUnaTarea, creandoUnaTarea, actualizandoUnaTarea, actualizarUnCampo, eliminandoUnaTarea,  } = require('../controller/tasks.controller');
+import { Router } from 'express'; // const router = require('express').Router();
+import { Pong, obteniendoTareas, obteniendoUnaTarea, creandoUnaTarea, actualizandoUnaTarea, actualizarUnCampo, eliminandoUnaTarea } from '../controller/tasks.controller.js';
 
+const router = Router();
 
 //      Rutas para el CRUD de Tareas
 
@@ -27,4 +28,4 @@ router.patch("/task/:id", actualizarUnCampo);
 router.delete("/task/:id", eliminandoUnaTarea);
 
 
-module.exports = router;
+export default router;

@@ -1,5 +1,20 @@
 # Practica de BACK-END utilizando Node.js y su framework Express junto con una Base de Datos Mysql para  realizar operaciones CRUD de Tareas
-**Iniciar el Proyecto**
+
+## Instalar las dependencias del proyecto
+```bash
+npm install
+```
+tambien puede usar
+
+```bash
+npm i
+```
+
+---
+
+## Este es un apartador para enseñar a contruir tu primer proyecto desde cero
+ 
+**Iniciar el Proyecto** 
 
 ```bash
 npm init --yes
