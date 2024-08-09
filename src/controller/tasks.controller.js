@@ -1,5 +1,5 @@
 //Importamos la conexión de la base de datos
-import {connection_db} from '../../db.js'; // const {connection_db} = require("../../db");
+import connection_db from '../../db.js'; // const {connection_db} = require("../../db");
 
 
 //Prueba para verificar la conexión a la base de datos
