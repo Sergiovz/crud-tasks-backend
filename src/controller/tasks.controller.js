@@ -1,16 +1,16 @@
 //Importamos la conexión de la base de datos
-import connection_db from "../../db.js"; // const {connection_db} = require("../../db");
+import { Pool } from "../../db.js"; // const {connection_db} = require("../../db");
 
 //Prueba para verificar la conexión a la base de datos
 export const Pong = async (req, res) => {
-  const result = await connection_db.query("SELECT 1 + 1 AS result");
+  const result = await Pool.query("SELECT 1 + 1 AS result");
   res.json(result[0]);
 };
 
 //      Obtener todas las Tareas
 export const obteniendoTareas = async (req, res) => {
   try {
-    const [rows] = await connection_db.query("SELECT * FROM tasks");
+    const [rows] = await Pool.query("SELECT * FROM tasks");
     res.send(rows);
   } catch (error) {
     return res
@@ -22,10 +22,9 @@ export const obteniendoTareas = async (req, res) => {
 //      Obtener una sola Tarea
 export const obteniendoUnaTarea = async (req, res) => {
   try {
-    const [rows] = await connection_db.query(
-      "SELECT * FROM tasks WHERE id = ?",
-      [req.params.id]
-    );
+    const [rows] = await Pool.query("SELECT * FROM tasks WHERE id = ?", [
+      req.params.id,
+    ]);
 
     if (rows.length == 0) {
       return res.status(404).json({ message: "Task Not Found" });
@@ -43,7 +42,7 @@ export const obteniendoUnaTarea = async (req, res) => {
 export const creandoUnaTarea = async (req, res) => {
   try {
     const { title, description, isComplete } = req.body;
-    const [rows] = await connection_db.query(
+    const [rows] = await Pool.query(
       "INSERT INTO tasks (title, description, isComplete) VALUES (?,?,?)",
       [title, description, isComplete]
     );
@@ -66,7 +65,7 @@ export const actualizandoUnaTarea = async (req, res) => {
     const { id } = req.params;
     const { title, description, isComplete } = req.body;
 
-    const [result] = await connection_db.query(
+    const [result] = await Pool.query(
       "UPDATE tasks SET title = ?, description = ?, isComplete = ? WHERE id = ?",
       [title, description, isComplete, id]
     );
@@ -75,10 +74,7 @@ export const actualizandoUnaTarea = async (req, res) => {
       return res.status(404).json({ message: "Task Not Found" });
     }
 
-    const [rows] = await connection_db.query(
-      "SELECT * FROM tasks WHERE id = ?",
-      [id]
-    );
+    const [rows] = await Pool.query("SELECT * FROM tasks WHERE id = ?", [id]);
 
     res.json(rows[0]);
   } catch (error) {
@@ -94,7 +90,7 @@ export const actualizarUnCampo = async (req, res) => {
     const { id } = req.params;
     const { title, description, isComplete } = req.body;
 
-    const [result] = await connection_db.query(
+    const [result] = await Pool.query(
       "UPDATE tasks SET title = IFNULL(?, title), description = IFNULL(?, description), isComplete = IFNULL(?, isComplete) WHERE id = ?",
       [title, description, isComplete, id]
     );
@@ -103,10 +99,7 @@ export const actualizarUnCampo = async (req, res) => {
       return res.status(404).json({ message: "Task Not Found" });
     }
 
-    const [rows] = await connection_db.query(
-      "SELECT * FROM tasks WHERE id = ?",
-      [id]
-    );
+    const [rows] = await Pool.query("SELECT * FROM tasks WHERE id = ?", [id]);
 
     res.json(rows[0]);
   } catch (error) {
@@ -119,10 +112,9 @@ export const actualizarUnCampo = async (req, res) => {
 //      Eliminar una Tarea
 export const eliminandoUnaTarea = async (req, res) => {
   try {
-    const [result] = await connection_db.query(
-      "DELETE FROM tasks WHERE id = ?",
-      [req.params.id]
-    );
+    const [result] = await Pool.query("DELETE FROM tasks WHERE id = ?", [
+      req.params.id,
+    ]);
 
     if (result.affectedRows <= 0) {
       return res.status(404).json({ message: "Task Not Found" });

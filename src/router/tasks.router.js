@@ -8,6 +8,8 @@ import {
   obteniendoTareas,
   obteniendoUnaTarea,
 } from "../controller/tasks.controller.js";
+import { validacionesTasks } from "../controller/validacionesTasks.js";
+import { validacionDeError } from "../../Middleware/validacionDeError.js";
 
 const router = Router();
 
@@ -23,13 +25,23 @@ router.get("/tasks", obteniendoTareas);
 router.get("/tasks/:id", obteniendoUnaTarea);
 
 //  Crear una Tarea
-router.post("/tasks", creandoUnaTarea);
+router.post("/tasks", validacionesTasks, validacionDeError, creandoUnaTarea);
 
 //  Actualizar todos los campos de una Tarea
-router.put("/tasks/:id", actualizandoUnaTarea);
+router.put(
+  "/tasks/:id",
+  validacionesTasks,
+  validacionDeError,
+  actualizandoUnaTarea
+);
 
 //  Actualizar un campo en especifico de una Tarea
-router.patch("/tasks/:id", actualizarUnCampo);
+router.patch(
+  "/tasks/:id",
+  validacionesTasks,
+  validacionDeError,
+  actualizarUnCampo
+);
 
 //  Eliminar una Tarea
 router.delete("/tasks/:id", eliminandoUnaTarea);

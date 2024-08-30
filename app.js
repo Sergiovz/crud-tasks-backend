@@ -5,6 +5,7 @@ import helmet from "helmet"; // const helmet = require('helmet');
 import morgan from "morgan"; // const morgan = require('morgan');
 import router from "./src/router/tasks.router.js";
 import express from "express"; // const express = require('express');
+import { Pool } from "./db.js";
 
 //inicializamos la aplicación
 const app = express();
@@ -30,5 +31,5 @@ app.use((req, res) => {
 
 //Arranque del Servidor
 app.listen(port, () => {
-  console.log(`Server running on port http://localhost:${port}`);
+  Pool, console.log(`Server running on port http://localhost:${port}`);
 });
